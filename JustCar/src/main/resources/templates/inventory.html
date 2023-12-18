@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${appName}"></title>
+    <div th:insert="fragments/addOns"></div>
+</head>
+<body>
+<div th:insert="fragments/navbar"></div>
+<div class="container">
+    <h1>Inventory</h1><hr/>
+    <h4>Total Cars Available - <span th:text="${cars.size()}"></span> </h4>
+    <div th:if="${message}" class="alert alert-danger">
+        <span th:text="${message}"></span>
+    </div>
+    <div class="row">
+        <div class="card" style="width: 18rem;" th:each="car: ${cars}">
+            <div class="card-body">
+                <div style="height: 200px">
+                <img class="card-img-top" th:src="${car.image}" alt="Card image cap" >
+                </div>
+                <h5 class="card-title"><span th:if="${car.make}" th:text="${car.make.carMake}"></span></h5>
+                <p class="card-text">Vin: <span th:text="${car.vin.vinNumber}"></span></p>
+                <p class="card-text">Model: <span th:if="${car.model}" th:text="${car.model.carModel}"></span></p>
+                <p class="card-text">Year: <span th:if="${car.carYear}" th:text="${car.carYear.carYearValue}"></span></p>
+                <p class="card-text">Transmission: <span th:text="${car.transmission}"></span></p>
+                <div class="row">
+                    <div class="col" sec:authorize="hasRole('ADMIN')">
+                        <a th:href="@{'/edit/'+ ${car.vin.vinNumber}}" class="btn btn-primary">Edit</a>
+                    </div>
+                    <div class="col">
+                        <form th:action="@{'/delete/car/' + ${car.vin.vinNumber}}" method="post">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:insert="fragments/footer"></div>
+</body>
+</html>

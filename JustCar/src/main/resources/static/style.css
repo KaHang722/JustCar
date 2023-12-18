@@ -1,0 +1,12 @@
+nav{
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
+    background-color: #ffd500;
+    height: 100px;
+}
+.main{
+    margin: 100px;
+}
+.error{
+    color:red;
+    font-weight: bold;
+}

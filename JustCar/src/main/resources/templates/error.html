@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${appName}"></title>
+    <div th:insert="fragments/addOns"></div>
+</head>
+<body>
+<div th:insert="fragments/navbar"></div>
+
+<div class="container main">
+    <h2>Sorry the page you're looking for does not exist!!</h2>
+</div>
+
+<div th:insert="fragments/footer"></div>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${appName}"></title>
+    <div th:insert="fragments/addOns"></div>
+</head>
+<body>
+<div th:insert="fragments/navbar"></div>
+
+<form class="container main" th:method="POST" th:action="@{/add/car}" th:object="${car}">
+    <div th:if="${#fields.hasAnyErrors()}">
+        <ul>
+            <li th:each="err: ${#fields.allErrors()}" th:text="${err}" th:class="error"/>
+        </ul>
+    </div>
+
+    <input type="hidden" th:field="*{id}" th:if="${edit}"/>
+
+    <div class="form-group">
+        <label for="vin">VIN</label>
+        <input type="text" class="form-control" id="vin" placeholder="Car VIN" th:field="*{vin.vinNumber}">
+    </div>
+
+    <div class="form-group">
+        <label for="make">Make</label>
+        <!--<input type="text" class="form-control" id="exampleInputMake" placeholder="Enter make" th:field="*{make}">-->
+        <select class="form-control" id="make" th:field="*{make}">
+            <option th:each="make:${makes}"
+                    th:text="${make.carMake}"
+                    th:value="${make.makeId}">
+            </option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="model">Model</label>
+        <!--<input type="text" class="form-control" id="exampleInputModel" placeholder="Enter model" th:field="*{model}">-->
+        <select class="form-control" id="model" th:field="*{model}">
+             <option th:each="model:${models}"
+                     th:text="${model.carModel}"
+                     th:value="${model.modelId}">
+             </option>
+        </select>
+     </div>
+
+     <div class="form-group">
+         <label for="carYear">Year</label>
+         <!--<input type="number" min="2003" max="2024" class="form-control" id="exampleInputYear" placeholder="Enter year" th:field="*{carYear.carYearValue}"> -->
+        <select class="form-control" id="carYear" th:field="*{carYear}">
+            <option th:each="year:${carYears}"
+                    th:text="${year.carYearValue}"
+                    th:value="${year.carYearId}">
+            </option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="carTransmission">Select Car Transmission</label>
+        <select class="form-control" id="carTransmission" th:field="*{transmission}">
+            <option th:value="Automatic">Automatic</option>
+            <option th:value="Manual">Manual</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="exampleInputImage">Image url</label>
+        <input type="text" class="form-control" id="exampleInputImage" placeholder="Enter Image url" th:field="*{image}">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<div th:insert="fragments/footer"></div>
+</body>
+</html>

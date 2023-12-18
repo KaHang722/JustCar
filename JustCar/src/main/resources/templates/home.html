@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${appName}"></title>
+    <div th:insert="fragments/addOns"></div>
+</head>
+<body>
+<div th:insert="fragments/navbar"></div>
+
+<div class="container main">
+    <form method="get" th:action="@{/search}">
+        <div class="row">
+             <div class="col-sm">
+                 <input type="number" placeholder="Enter Year" min="2000" max="2024" class="form-control" name="carYear">
+             </div>
+            <div class="col-sm">
+                <input type="text" placeholder="Enter Make" class="form-control" name="make">
+            </div>
+            <div class="col-sm">
+                <input type="text" placeholder="Enter Model" class="form-control" name="model">
+            </div>
+            <div class="col-sm">
+                <input type="text" placeholder="Enter Transmission" class="form-control" name="transmission">
+            </div>
+            <div class="col-sm">
+                <button class="btn btn-primary">Search</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div th:insert="fragments/footer"></div>
+</body>
+</html>

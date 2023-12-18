@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${appName}"></title>
+    <div th:insert="fragments/addOns"></div>
+</head>
+<body>
+<div th:insert="fragments/navbar"></div>
+
+<div class="container main">
+    <form method="get" th:action="@{/search}">
+        <div class="row">
+            <div class="col-sm">
+                <input type="text" placeholder="Enter KeyWord" class="form-control" name="searchQuery" id="search">
+            </div>
+        </div>
+    </form>
+
+    <table id="table">
+        <thead>
+            <tr scope="row">
+                <th>Car Vin</th>
+                <th>Car Year</th>
+                <th>Car Make</th>
+                <th>Car Model</th>
+                <th>Car Transmission</th>
+            </tr>
+        </thead>
+        <tbody id="results">
+
+        </tbody>
+    </table>
+</div>
+
+<div th:insert="fragments/footer"></div>
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function (e){
+        $("#search").keyup((event)=>{
+            const searchKey = event.target.value;
+            console.log(searchKey);
+
+            fetch("/api/search/" + searchKey)
+                .then((res)=>res.json())
+                .then((data)=>populateData(data))
+                .catch((err)=>console.log(err));
+        });
+
+        const populateData=(data)=>{
+            $('#results').html("");
+            data.forEach(car => {
+                $("#results").append(
+                    `<tr scope="row">
+                   <td> ${car.vin.vinNumber}</td>
+                   <td> ${car.carYear.carYearValue}</td>
+                   <td> ${car.make.carMake}</td>
+                   <td> ${car.model.carModel}</td>
+                   <td> ${car.transmission}</td>
+
+                    </tr>`
+
+                );
+            });
+        }
+    });
+</script>
+</body>
+</html>
